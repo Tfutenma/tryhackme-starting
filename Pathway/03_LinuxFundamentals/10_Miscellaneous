@@ -1,0 +1,31 @@
+" sudo "
+Throughout this room you might have seen me mention the root user. The root user is the equivalent of the administrator user on Windows, and like Windows certain commands, and certain things you download from the internet will require admin permissions.
+That's where sudo comes in. sudo is Linux's run as administrator button, and the syntax goes sudo <command>.
+Note: whoami is just a command that states your current user.
+As you can see when using sudo the command is run as root. It is important to note that you need to have your current user's password to use it. Again like Windows, not every user has permission to use sudo, but most Linux OS' set up a user that has permissions when you install it. 
+Assuming you create a new user that you also want to give sudo permissions to, the man page for sudo has a section on how to add user permissions. It is also worth noting you can configure sudo to run commands as other users, again the man page has a section on that(sudo has a very nice man page)
+
+" adduser addgroup "
+You know about how to modify permissions for users and groups, therefore it's helpful to know how to create them. Luckily Linux provides a nice helpful way to do this, with adduserand addgroup. The syntax for both of these commands are adduser username and addgroup groupname.
+It's important to note that only root has permissions to add users and groups, as seen with the failure when I attempted to run the commands without sudo. You may be wondering how to add a user to a group. that is done with the usermod command, the syntax for that is usermod -a -G <groups seperated by commas> <user>. Meaning if I wanted to add the user noot to b I would run usermod -a -G b noot.
+Note: id is a command that allows you to view basic information about a user.
+
+" nano " 
+Up until this point you may have seen me only using >> to add content to a file. Luckily that's not the only way to do things, nano is a terminal based text editor. The syntax for nano is nano <file you want to write to>. 
+Nano has alot of commands inside of it's text editor, and the text editor as a whole probably warrants a room on it's own, but 99.9 percent of the time you're gonna wanna use ctrl+x
+Note: ^X means ctrl+x, most of the time you see ^<key> the ^ means control.
+
+" sh "
+Linux provides us a way to run commands one after another without using any special operators. This is done by storing the commands you want to run in a file with a .sh extension
+If we save and run bash s.sh it executes those commands in order.
+We can remove the sh exyension and make the file executableee by: 
+mv s.sh savechmod 777 s
+./s
+
+" ps "
+Every binary you execute on linux, is a process while it's run. A process is just another word for a running program. A list of user created processes can be viewed with the ps command
+While this is technically all the user created processes, it's likely not the information you're looking for if you're going to be examining processes. To view a list of all system processes, you have to use the -ef flag
+Every process that is currently running on the system is listed, along with some basic information about the process. Arguably the most interesting part about that list is the second column, the 3-5 digit numbers. Those are known as Process ID's(PID's) and they're how you interact with the processes. 90% of the time you'll likely be wanting to stop these processes and that's done with the kill command(an apt choice of naming I know). 
+The syntax of kill is kill <PID>.
+After running kill, the process no longer shows up! Another useful way to interact with PID's is through the command top. top shows you what processes are taking up the most system resources, which allows you to manage the resource allocation on your system by killing unneeded processes.
+Note: The top man page has descriptions for what every value means, and how they affect your system; I highly recommend reading it!

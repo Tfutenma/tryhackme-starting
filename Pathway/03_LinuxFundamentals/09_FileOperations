@@ -1,0 +1,67 @@
+" chmod "
+
+chmod allows you to set the different permissions for a file, and control who can read it. The syntax of this command is typically chmod <permissions> <file>. 
+The interesting part is how the permissions are set. They're set using a three digit number, where each digit controls a specific permission, meaning the first digit controls the permissions for a user, the second digit controls the permission for a group, the third digit controls permissions for everyone that's not a part of the user or group.
+Now the value of the digits control whether they can read, write or execute it or do all three, and to properly calculate it some math needs to be done.
+
+Digit	            Meaning
+1	            That file can be executed
+2	            That file can be written to
+3	            That file can be executed and written to
+4	            That file can be read
+5	            That file can be read and executed
+6	            That file can be written to and read
+7	            That file can be read, written to, and executed
+
+The way these values are calculated is this. The digit 1 means the file can be executed, the digit 2 means it can be written to, and the digit 4 means it can be read. You get the different permissions by adding these digits together. For example 1+2 is 3 meaning that file can be executed and written to. Now let's see how it all works in perspective.
+ls -al provides a helpful way of viewing the permissions of files in the current directory.
+Recall that file permissions are divided into three sections, user and group and everyone else. The same is true here; however, everything starts from the second hyphen not the first, so we can just forget the first hyphen for now. Note that everything is in sequential order, so the first three characters control permissions for the user, the second three characters control permissions for the group, and the final three characters control permissions for everyone else
+UGE
+(Forgive the artist's rendition. U = user, G = group, E = everyone else)
+rw means as you might expect "read and write", meaning the user has read write perms to the file. Following that logic, that means members of the group and everyone else have only read perms. To convert that to numbers the permissions for that file in number form are 644. We can test this by trying to change the permissions
+When we try to change the perms to 644 nothing happens because the perms are already 644. The interesting part is while we can write data to .profile with echo while the perms are 644, we can't when we change the perms to 544, because we took away our own write perms. Following that logic, that means we can completely lock ourselves out of writing to a file we already own!
+Note: It is possible to give someone no perms to a file, You can just put 0 as the digit. 770 Means that everyone that isnt a part of the user or group cant do anything to the file.
+
+" chown "
+Recall that ls shows us our username twice.
+These attributes are the user, and group attributes resepectively. Recall that we can edit the permissions for these attributes, so it stands to reason that we can also change these attributes. That is done using the chown command, which allows us to change the user and group for any file. The syntax for this command is chown user:group file. For example if we wanted to change the owner of file to shiba2 as well as the group to shiba2, we could usechown shiba2:shiba2 file.    
+Note: You can only use chown if you are "above" that other user, meaning that chown is best done with the root(administrator) user.
+You can also use chown without specifying a group. So you can just use chown user file if you only wanted to change the user but keep the group.
+
+" rm "
+Let's take a break from all the permissions and math, and look at something that can completely destroy your whole Linux system if used carelessly! rm as you might have guessed means remove, and that's exactly what it does.
+As you can imagine this is incredibly dangerous, as you can remove some very important files, and render your system completely unusable. It is not worth noting that you need write permissions to the file to deleted so you cant just delete any file if you're a regular user.
+
+" mv "
+mv allows you to move files from one place to another. The syntax for the command is mv <file> <destination>. so if I wanted to move a file to my home directory I could type mv file ~.
+Note: You can also use mv to change the name of file, mv file ~/ghfds will rename file to ghfds. 
+
+" cp "
+cp does mainly the same thing as mv, except instead of moving the file it duplicates(copies) it. The syntax is also the same as mv, meaning the syntax is cp <file> <destination> .
+
+" cd && mkdir "
+In windows there are folders. Folders allow you to store multiple files in a single group, which makes them easier to organize and access. Linux has the exact same thing, except their called directories. 
+Linux allows you to change the location of the current directory through the use of the cd command. The syntax of the cd command is this, cd <directory>.
+Relative Paths are supported, as well as absolute paths. Our command line provides a nice section for seeing exactly what directory you're in, so you'll never be lost!
+This brings us to mkdir, occasionally you'll want to make a new directory to store files in, and that is done using mkdir, the syntax of mkdir is mkdir <directory name>.
+
+" ln "
+ln is a weird one, because it has two different main uses. One of those is what's known as "hard linking", which completely duplicates the file, and links the duplicate to the original copy. Meaning What ever is done to the created link, is also done to the original file. The ln syntax is ln source destination.
+It's important to be very careful with hard links, as depending on what you're doing it can be very easy to erase data from a file.
+The next form of linking is symbolic linking(symlink). While a hard linked file contains the data in the original file, a symbolic link is just a glorified reference. Meaning that the actual symbolic link has no data in it at all, it's just a reference to another file.
+The syntax for a symbolic link is the exact same, but it uses the -s flag, so to create a symbolic link, you would run ln -s <file> <destination>.
+ls even shows that its a symbolic link with the arrow pointing to what the link is referencing. It is important to note the permissions on the symlink. It has full 777 perms meaning that in theory you can execute the symlink, however since it is just a reference, in reality it has the same perms as the original file.
+
+" find "
+find is an incredibly powerful, but incredibly simple command. It allows you to do just as it says, find files. It does this by listing every file in the current directory, so if you ran find /tmp it would list every file in /tmp. 
+It is worth noting that find is recursive, so it searches every directory that is in the original directory you provided. Meaning that if you were to run find /, it would list every file on the OS. Another thing worth noting is that it can only list files in directories that you have permission to access, meaning you cant just list every file as every user.
+The true power of this command though comes from the parameters you can provide it. You can use find dir -user , to list every file owned by a specific user; you can use find dir -group to list every file owned by a specific group. The sheer customizability of the command is it's most powerful feature.
+This is one command I highly recommend reading the manual page on to learn all of it's options. This command is invaluable when working with files.
+
+" grep "
+I can say without reservation that grep is one of the most useful commands to learn. It allows you find data inside of data. When working with large files, or a large output, it is arguably the best way to narrow the output down to better find what your looking for. The syntax of the command is grep <string> <file> however file is optional if you're using piping.
+Note: You can search multiple files at the same time, meaning you can theoretically do grep <string> <file> <file2>
+For instance let's say you know have the file name of test1234, but you don't know where it is on the system. find can be used to list every file on the OS, and grep can be used to find the actual file.
+grep comes and saves the day! What about if you have a bunch of data, and you wanna see if the string hello is in it, and if so what line number it's at.
+I'm sure you can see just how useful this command is. When searching logs for the cause of an error message, when parsing large amounts of data for that specific piece, when searching every file in a directory for that one line that you may need to change.
+Another important thing to note is that grep supports regular expressions, you see I wasn't being entirely truthful with you(props if you get the reference) when I says the syntax is grep <string> <file>, the syntax is actually grep <regular expression> <file>. Unfortunately regular expressions are out of the scope of this room, but I highly encourage you to read up on regular expressions, as they increase the power of grep tenfold.

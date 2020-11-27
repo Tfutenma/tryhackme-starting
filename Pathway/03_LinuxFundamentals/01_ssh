@@ -1,0 +1,5 @@
+While the most common usage of a regular operating system is graphical(allowing you to see pictures, web browsers, file managers etc.) SSH works through a command line.
+
+The syntax on how to use this command is ssh <user>@<host>. So to ssh into the machine you'll need to type in ssh shiba1@MACHINE_IP. It will prompt you for the user password.
+
+Now that you've logged into the server, you're gonna wanna do things, and everything that can be done over SSH is done by running commands. To start out, we'll take a look at some of the basic commands, and the first command will be echo. Type echo hello, and press enter and you'll see your input echoed back at you.

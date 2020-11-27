@@ -1,0 +1,45 @@
+1. You have to know how to research on Google
+
+2. Think about the subject, then research it
+
+3. For example,  you've downloaded a JPEG image from a remote server. You suspect that there's something hidden inside it, but how can you get it out?
+How about we start by searching for “hiding things inside images”.
+
+Notice that gives us the title of a technique: “Steganography”. You can then click that link and read the document, which will teach you how files are hidden inside images.
+
+Ok, so we know how it's done, let's try searching for a way to extract files using steganography: "extract file from jpeg steganography"
+
+The very first tool there looks to be useful. It can be used to extract embedded data from JPEG files -- exactly what we need it to do! This page also tells you that steghide can be installed using something called “apt”.
+
+so apt is a package manager that lets us install tools on Linux distributions like Ubuntu (or Kali!).
+How can we install packages using apt? Let's search it!
+
+In the Burp Suite Program that ships with Kali Linux, what mode would you use to manually send a request (often repeating a captured request numerous times)?
+
+What hash format are modern Windows login passwords stored in?
+
+What are automated tasks called in Linux?
+
+What number base could you use as a shorthand for base 2 (binary)?
+
+If a password hash starts with $6$, what format is it (Unix variant)?
+
+
+4. Vulnerability searching
+Often in hacking you'll come across software that might be open to exploitation. For example, Content Management Systems (such as Wordpress, FuelCMS, Ghost, etc) are frequently used to make setting up a website easier, and many of these are vulnerable to various attacks. So where would we look if we wanted to exploit specific software?
+
+The answer to that question lies in websites such as:
+
+ExploitDB
+NVD
+CVE Mitre
+
+NVD keeps track of CVEs (Common Vulnerabilities and Exposures) -- whether or not there is an exploit publicly available -- so it's a really good place to look if you're researching vulnerabilities in a specific piece of software. CVEs take the form: CVE-YEAR-IDNUMBER
+(Hint Hint: It's going to be really useful in the questions!)
+
+If you're inclined towards the CLI on Linux, Kali comes pre-installed with a tool called "searchsploit" which allows you to search ExploitDB from your own machine. This is offline, and works using a downloaded version of the database, meaning that you already have all of the exploits already on your Kali Linux!
+use the command searchsploit fuelcms to search for exploits.
+You also can use the website to do that.
+
+5. Manual pages 
+Every tool on Linux, have a manual, that can be accessed by man command: like "man ssh"
